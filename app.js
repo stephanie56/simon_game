@@ -25,31 +25,39 @@ $(document).ready(function(){
   }
 
   var game = {
-    pattern: [g],
-    keyarr: [g.key],
+    pattern: [],
+    keyarr: [],
     step: 0,
   }
   var score = [];
 
   $('#start').click(function(){
     // step 1: when start btn is clicked, fire up first block
-    activeBlock(game.pattern[game.step], 1000);
-
-    // step 2: user click on the block
-    $('.simon-block').click(function(){
-      var k = parseInt($(this).attr('data-key'));
-      score.push(k);
-      checkStep();
-    });
+    game.pattern[0] = randStep();
+    game.keyarr[0] = game.pattern[0].key;
+    runGame(game.pattern);
   });
 
+  // step 2: user click on the block
+  $('.simon-block').click(function(){
+    var k = parseInt($(this).attr('data-key'));
+    score.push(k);
+    console.log(score);
+    checkStep();
+    if(checkStep){
+      runGame(game.pattern);
+    }
+    else{
+      console.log("you lose");
+    }
+  });
 
+  /** main functions **/
   function activeBlock (obj, timeOut){
     setTimeout(function() {
       changeColor(obj.key);
       obj.changeSound();
     }, timeOut);
-    //console.log("pressing " + step);
   }
 
   function changeColor (num){
@@ -69,8 +77,6 @@ $(document).ready(function(){
   }
 
   function runGame (arr) {
-    // activeBlock(game.pattern[0], 1000);
-    // activeBlock(game.pattern[game.step], 3000);
     var i = 0;
     var time = 1000;
     while(i < arr.length){
@@ -83,18 +89,25 @@ $(document).ready(function(){
   function checkStep (){
     // if user input === pattern. move to next step
     if(JSON.stringify(score) == JSON.stringify(game.keyarr)){
+      var randomStep = randStep();
       game.step += 1;
-      game.pattern.push(r);
-      game.keyarr.push(r.key);
-      console.log(game);
-      runGame(game.pattern);
+      game.pattern.push(randomStep);
+      game.keyarr.push(randomStep.key);
+      console.table(game);
+      score = [];
       $('#score').html(game.step);
-
+      return true;
     }
     else{
-      $('#score').html("You lose");
+      //$('#score').html("You lose");
+      return false;
     }
   }
 
+ function randStep (){
+   var steps = [g,r,b,y];
+   var rand = Math.floor(Math.random()*4);
+   return steps[rand];
+ }
 
 });
