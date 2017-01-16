@@ -4,31 +4,36 @@ $(document).ready(function(){
     key:1,
     audioSrc:'audio/simonSound1.mp3',
     changeSound: changeSound
-  }
+  };
   // red block
   var r = {
     key:2,
     audioSrc:'audio/simonSound2.mp3',
     changeSound: changeSound
-  }
+  };
  // yellow block
   var y = {
     key:3,
     audioSrc:'audio/simonSound3.mp3',
     changeSound: changeSound
-  }
+  };
  // blue block
   var b = {
     key:4,
     audioSrc:'audio/simonSound4.mp3',
     changeSound: changeSound
-  }
+  };
 
   var game = {
+    1:g,
+    2:r,
+    3:y,
+    4:b,
     pattern: [],
     keyarr: [],
     step: 0,
-  }
+  };
+
   var score = [];
 
   $('#start').click(function(){
@@ -43,6 +48,10 @@ $(document).ready(function(){
     var k = parseInt($(this).attr('data-key'));
     score.push(k);
     console.log(score);
+    setTimeout(function() {
+      changeColor(k);
+      game[k].changeSound();
+    }, 0);
     checkStep();
   });
 
@@ -58,7 +67,7 @@ $(document).ready(function(){
     $('[data-key="'+ num + '"]').css('opacity','0.6');
     setTimeout(function(){
       $('[data-key="'+ num  +'"]').css('opacity','1.0');
-    }, 2000)
+    }, 500)
   }
 
   function changeSound () {
@@ -72,8 +81,8 @@ $(document).ready(function(){
 
   function runGame (arr) {
     var i = 0;
-    var time = 500;
-    if(arr.length >= 4){
+    var time = 1000;
+    if(arr.length >= 20){
       $('#msg').html("You Won!!");
       //console.log("you won");
       return true;
@@ -81,7 +90,7 @@ $(document).ready(function(){
     while(i < arr.length){
       activeBlock(arr[i], time);
       i += 1;
-      time += 1000;
+      time += 500;
     }
   }
 
