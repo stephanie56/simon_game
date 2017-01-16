@@ -1,7 +1,4 @@
 $(document).ready(function(){
-  var pattern = [g,b,r,y,r,b,g];
-  var score = [];
-
   // green block
   var g = {
     key:1,
@@ -27,16 +24,23 @@ $(document).ready(function(){
     changeSound: changeSound
   }
 
-  $('#start').click(function(){
-    activeBlock(g, 1000);
-    activeBlock(b, 3000);
-    activeBlock(r, 7000);
-    activeBlock(y, 10000);
-    activeBlock(r, 13000);
-    activeBlock(b, 16000);
-    activeBlock(g, 19000);
+  var game = {
+    pattern: [g],
+    keyarr: [g.key],
+    step: 0,
+  }
+  var score = [];
 
-    console.log("im changing color!");
+  $('#start').click(function(){
+    // step 1: when start btn is clicked, fire up first block
+    activeBlock(game.pattern[game.step], 1000);
+
+    // step 2: user click on the block
+    $('.simon-block').click(function(){
+      var k = parseInt($(this).attr('data-key'));
+      score.push(k);
+      checkStep();
+    });
   });
 
 
@@ -64,8 +68,33 @@ $(document).ready(function(){
     audio.autoplay = true;
   }
 
-  //console.log(pattern.length);
-  // yellowBlock.changeSound();
+  function runGame (arr) {
+    // activeBlock(game.pattern[0], 1000);
+    // activeBlock(game.pattern[game.step], 3000);
+    var i = 0;
+    var time = 1000;
+    while(i < arr.length){
+      activeBlock(arr[i], time);
+      i += 1;
+      time += 2000;
+    }
+  }
+
+  function checkStep (){
+    // if user input === pattern. move to next step
+    if(JSON.stringify(score) == JSON.stringify(game.keyarr)){
+      game.step += 1;
+      game.pattern.push(r);
+      game.keyarr.push(r.key);
+      console.log(game);
+      runGame(game.pattern);
+      $('#score').html(game.step);
+
+    }
+    else{
+      $('#score').html("You lose");
+    }
+  }
 
 
 });
