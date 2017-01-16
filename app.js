@@ -1,22 +1,51 @@
 $(document).ready(function(){
-  var pattern = [1,4,2,3,4,2,2,1,3,1,2,4,1,3,2,1,3,4,2,2];
-  var num = pattern[0];
+  var pattern = [g,b,r,y,r,b,g];
+  var score = [];
+
+  // green block
+  var g = {
+    key:1,
+    audioSrc:'audio/simonSound1.mp3',
+    changeSound: changeSound
+  }
+  // red block
+  var r = {
+    key:2,
+    audioSrc:'audio/simonSound2.mp3',
+    changeSound: changeSound
+  }
+ // yellow block
+  var y = {
+    key:3,
+    audioSrc:'audio/simonSound3.mp3',
+    changeSound: changeSound
+  }
+ // blue block
+  var b = {
+    key:4,
+    audioSrc:'audio/simonSound4.mp3',
+    changeSound: changeSound
+  }
+
   $('#start').click(function(){
-    activeBlock(1, 1000);
-    activeBlock(4, 3000);
-    activeBlock(2, 7000);
-    activeBlock(4, 10000);
-    activeBlock(2, 13000);
-    activeBlock(2, 16000);
-    activeBlock(1, 19000);
-    
+    activeBlock(g, 1000);
+    activeBlock(b, 3000);
+    activeBlock(r, 7000);
+    activeBlock(y, 10000);
+    activeBlock(r, 13000);
+    activeBlock(b, 16000);
+    activeBlock(g, 19000);
+
     console.log("im changing color!");
   });
 
 
-  function activeBlock (step, timeOut){
-    setTimeout(function() { changeColor(step) }, timeOut);
-    console.log("pressing " + step);
+  function activeBlock (obj, timeOut){
+    setTimeout(function() {
+      changeColor(obj.key);
+      obj.changeSound();
+    }, timeOut);
+    //console.log("pressing " + step);
   }
 
   function changeColor (num){
@@ -26,8 +55,17 @@ $(document).ready(function(){
     }, 2000)
   }
 
-  //console.log(pattern.length);
+  function changeSound () {
+    var audio = new Audio();
+    audio.addEventListener("load", function(){
+      audio.play();
+    }, true);
+    audio.src = this.audioSrc;
+    audio.autoplay = true;
+  }
 
+  //console.log(pattern.length);
+  // yellowBlock.changeSound();
 
 
 });
