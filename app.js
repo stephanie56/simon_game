@@ -44,12 +44,6 @@ $(document).ready(function(){
     score.push(k);
     console.log(score);
     checkStep();
-    if(checkStep){
-      runGame(game.pattern);
-    }
-    else{
-      console.log("you lose");
-    }
   });
 
   /** main functions **/
@@ -78,28 +72,37 @@ $(document).ready(function(){
 
   function runGame (arr) {
     var i = 0;
-    var time = 1000;
+    var time = 500;
+    if(arr.length >= 4){
+      $('#msg').html("You Won!!");
+      //console.log("you won");
+      return true;
+    }
     while(i < arr.length){
       activeBlock(arr[i], time);
       i += 1;
-      time += 2000;
+      time += 1000;
     }
   }
 
   function checkStep (){
     // if user input === pattern. move to next step
-    if(JSON.stringify(score) == JSON.stringify(game.keyarr)){
+    if(JSON.stringify(score) === JSON.stringify(game.keyarr)){
       var randomStep = randStep();
       game.step += 1;
       game.pattern.push(randomStep);
       game.keyarr.push(randomStep.key);
       console.table(game);
       score = [];
+      runGame(game.pattern);
       $('#score').html(game.step);
       return true;
     }
-    else{
-      //$('#score').html("You lose");
+    else if (score.length === game.keyarr.length && JSON.stringify(score) !== JSON.stringify(game.keyarr)){
+      $('#msg').html("You lose");
+      return false;
+    }
+    else {
       return false;
     }
   }
@@ -109,5 +112,6 @@ $(document).ready(function(){
    var rand = Math.floor(Math.random()*4);
    return steps[rand];
  }
+
 
 });
