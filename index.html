@@ -3,25 +3,31 @@
   <head>
     <meta charset="utf-8">
     <title>Simon Game</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-  <header>
-    <h1>Simon Game <span id="msg"></span></h1>
-  </header><!--header-->
   <section id="app">
-  <div class="container">
+    <h1 class="text-center">Simon Game<span id="msg"></span></h1>
+  <div class="wrapper">
   <div id="green" class="simon-block" data-key="1"></div>
   <div id="red" class="simon-block" data-key="2"></div>
   <div id="blue" class="simon-block" data-key="3"></div>
   <div id="yellow" class="simon-block opacity" data-key="4"></div>
+  </div><!-- wrapper -->
+  <div class="btn-wrapper">
   <div id="score"></div>
-  <button id="start">START</button>
-  </div><!-- container -->
+  <button id="start" class="btn btn-danger">Start</button>
+  <button id="restart" class="btn btn-primary">Restart</button>
+  </div>
+  <footer>Made With <i class="glyphicon glyphicon-heart"></i> by <a href="https://github.com/stephanie56" target="_blank">Stephanie Zeng</a></footer>
   </section><!-- app -->
-  <footer>Written by <a href="" target="_blank">Stephanie Zeng</a></footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
     <script src="app.js"></script>
   </body>
 </html>

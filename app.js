@@ -45,14 +45,14 @@ $(document).ready(function(){
 
   // step 2: user click on the block
   $('.simon-block').click(function(){
-    var k = parseInt($(this).attr('data-key'));
-    score.push(k);
-    console.log(score);
-    setTimeout(function() {
-      changeColor(k);
-      game[k].changeSound();
-    }, 0);
-    checkStep();
+      var k = parseInt($(this).attr('data-key'));
+      score.push(k);
+      console.log(score);
+      setTimeout(function() {
+        changeColor(k);
+        game[k].changeSound();
+      }, 0);
+      checkStep();
   });
 
   /** main functions **/
@@ -67,7 +67,7 @@ $(document).ready(function(){
     $('[data-key="'+ num + '"]').css('opacity','0.6');
     setTimeout(function(){
       $('[data-key="'+ num  +'"]').css('opacity','1.0');
-    }, 500)
+    }, 300)
   }
 
   function changeSound () {
@@ -122,5 +122,8 @@ $(document).ready(function(){
    return steps[rand];
  }
 
+ function clear(){
+
+ }
 
 });
