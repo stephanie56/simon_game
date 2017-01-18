@@ -55,6 +55,10 @@ $(document).ready(function(){
       checkStep();
   });
 
+  $("#restart").click(function(){
+    clear();
+  });
+
   /** main functions **/
   function activeBlock (obj, timeOut){
     setTimeout(function() {
@@ -123,7 +127,12 @@ $(document).ready(function(){
  }
 
  function clear(){
-
+     game.pattern = [];
+     game.keyarr = [];
+     game.step = 0;
+     score = [];
+     $("#msg").html("");
+     $("#score").html("");
  }
 
 });
