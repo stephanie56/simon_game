@@ -99,6 +99,7 @@ $(document).ready(function(){
   }
 
   function checkStep (){
+    var index = score.length - 1;
     // if user input === pattern. move to next step
     if(JSON.stringify(score) === JSON.stringify(game.keyarr)){
       var randomStep = randStep();
@@ -106,12 +107,13 @@ $(document).ready(function(){
       game.pattern.push(randomStep);
       game.keyarr.push(randomStep.key);
       console.table(game);
+      // empty score array to store the next step
       score = [];
       runGame(game.pattern);
       $('#score').html(game.step);
       return true;
     }
-    else if (score.length === game.keyarr.length && JSON.stringify(score) !== JSON.stringify(game.keyarr)){
+    else if (score[index] !== game.keyarr[index]){
       $('#msg').html("You lose");
       return false;
     }
