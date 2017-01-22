@@ -36,8 +36,25 @@ $(document).ready(function(){
 
   var score = [];
 
+  var strict = false; // strict mode is off by defalt
+  $('#strict').click(function(){
+    if(strict === false){
+      $(this).html('Strict Mode <br> On');
+      $(this).css('background-color','#333');
+      strict = true;
+      console.log(strict);
+    }
+    else{
+      $(this).html('Strict Mode <br> Off');
+      $(this).css('background-color','');
+      strict = false;
+      console.log(strict);
+    }
+  });
+
   $('#start').click(function(){
     // step 1: when start btn is clicked, fire up first block
+    $('#score').html("--");
     game.pattern[0] = randStep();
     game.keyarr[0] = game.pattern[0].key;
     runGame(game.pattern);
@@ -45,13 +62,13 @@ $(document).ready(function(){
 
   // step 2: user click on the block
   $('.simon-block').click(function(){
-      var k = parseInt($(this).attr('data-key'));
-      score.push(k);
-      console.log(score);
-      setTimeout(function() {
-        changeColor(k);
-        game[k].changeSound();
-      }, 0);
+    var k = parseInt($(this).attr('data-key'));
+    score.push(k);
+    console.log(score);
+    setTimeout(function() {
+      changeColor(k);
+      game[k].changeSound();
+    }, 0);
       checkStep();
   });
 
@@ -113,11 +130,13 @@ $(document).ready(function(){
       $('#score').html(game.step);
       return true;
     }
-    else if (score[index] !== game.keyarr[index]){
-      $('#msg').html("You lose");
-      return false;
+    else if (score[index] !== game.keyarr[index] && strict === false){
+      runGame(game.pattern);
+      return true;
     }
-    else {
+
+    else if(score[index] !== game.keyarr[index] && strict === true){
+      $('#msg').html("You lose");
       return false;
     }
   }
