@@ -131,6 +131,9 @@ $(document).ready(function(){
       return true;
     }
     else if (score[index] !== game.keyarr[index] && strict === false){
+      $('#score').html("Try again!");
+      // empty score board;
+      score = [];
       runGame(game.pattern);
       return true;
     }
